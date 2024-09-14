@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: loja-veiculos
+  datasource:
+    url: jdbc:postgresql://localhost:5432/loja
+    password: secret
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  threads:
+    virtual:
+      enabled: true
+
