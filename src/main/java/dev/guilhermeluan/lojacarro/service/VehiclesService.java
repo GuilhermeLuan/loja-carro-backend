@@ -1,7 +1,6 @@
 package dev.guilhermeluan.lojacarro.service;
 
 import dev.guilhermeluan.lojacarro.exception.BadRequestException;
-import dev.guilhermeluan.lojacarro.mapper.VehiclesMapper;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.repositories.VehiclesRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class VehiclesService {
-    private static final VehiclesMapper MAPPPER = VehiclesMapper.INSTANCE;
     private final VehiclesRepository repository;
 
     public Page<Vehicles> findALl(Pageable pageable, String param) {
@@ -28,9 +26,9 @@ public class VehiclesService {
                 orElseThrow(() -> new BadRequestException("Vehicle not found"));
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         var vehicles = repository.findById(id);
-        repository.deleteById(id);
+        repository.deleteById(vehicles.get().getId());
     }
 
     public void update(Vehicles vehicle) {

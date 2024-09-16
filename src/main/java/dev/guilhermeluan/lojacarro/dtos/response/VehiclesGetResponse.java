@@ -4,7 +4,7 @@ import dev.guilhermeluan.lojacarro.model.VehicleType;
 
 public record VehiclesGetResponse(
         Long id,
-        VehicleType vehicleType,
+        VehicleType type,
         String model,
         String color,
         Double price,
