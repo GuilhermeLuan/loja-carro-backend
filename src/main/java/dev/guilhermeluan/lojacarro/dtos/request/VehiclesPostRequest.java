@@ -1,9 +1,9 @@
-package dev.guilhermeluan.lojacarro.dtos;
+package dev.guilhermeluan.lojacarro.dtos.request;
 
 import dev.guilhermeluan.lojacarro.model.VehicleType;
 import jakarta.validation.constraints.NotBlank;
 
-public record VehiclesPostRequestBody(
+public record VehiclesPostRequest(
         @NotBlank
         VehicleType type,
         @NotBlank

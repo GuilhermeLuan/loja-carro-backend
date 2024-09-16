@@ -1,6 +1,6 @@
 package dev.guilhermeluan.lojacarro.service;
 
-import dev.guilhermeluan.lojacarro.dtos.VehiclesPostRequestBody;
+import dev.guilhermeluan.lojacarro.dtos.request.VehiclesPostRequest;
 import dev.guilhermeluan.lojacarro.exception.BadRequestException;
 import dev.guilhermeluan.lojacarro.mapper.VehiclesMapper;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +20,8 @@ public class VehiclesService {
         return param == null ? vehiclesRepository.findAll(pageable) : vehiclesRepository.findByModelIgnoreCase(param, pageable);
     }
 
-    public Vehicles save(VehiclesPostRequestBody request) {
-        var vehicles = MAPPPER.toVehicles(request);
-        return vehiclesRepository.save(vehicles);
+    public Vehicles save(Vehicles vehicle) {
+        return vehiclesRepository.save(vehicle);
     }
 
     public Vehicles findByIdOrThrowBadRequestException(Long id) {
