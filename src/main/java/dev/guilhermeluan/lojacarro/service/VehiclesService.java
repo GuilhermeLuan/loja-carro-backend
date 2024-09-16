@@ -18,16 +18,8 @@ public class VehiclesService {
     private static final VehiclesMapper MAPPPER = VehiclesMapper.INSTANCE;
     private final VehiclesRepository vehiclesRepository;
 
-    public Page<Vehicles> listAll(Pageable pageable) {
-        return vehiclesRepository.findAll(pageable);
-    }
-
-    public List<Vehicles> listAllNonPageable() {
-        return vehiclesRepository.findAll();
-    }
-
-    public List<Vehicles> listByModel(String model) {
-        return vehiclesRepository.findByModel(model);
+    public Page<Vehicles> findALl(Pageable pageable, String param) {
+        return param == null ? vehiclesRepository.findAll(pageable) : vehiclesRepository.findByModelIgnoreCase(param, pageable);
     }
 
     public Vehicles save(VehiclesPostRequestBody request) {
