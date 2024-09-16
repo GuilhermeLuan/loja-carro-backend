@@ -36,7 +36,6 @@ public class VehiclesService {
     public void update(Vehicles vehicle) {
         assertVehicleExist(vehicle.getId());
 
-        repository.deleteById(vehicle.getId());
         repository.save(vehicle);
     }
 

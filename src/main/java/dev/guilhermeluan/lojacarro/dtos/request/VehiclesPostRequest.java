@@ -2,16 +2,18 @@ package dev.guilhermeluan.lojacarro.dtos.request;
 
 import dev.guilhermeluan.lojacarro.model.VehicleType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record VehiclesPostRequest(
-        @NotBlank
+        @NotNull
         VehicleType type,
         @NotBlank
         String model,
         @NotBlank
         String color,
-        @NotBlank
+        @NotNull
         Double price,
-        @NotBlank
+        @NotNull
         int year
-) { }
+) {
+}
