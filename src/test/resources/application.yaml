@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: loja-veiculos
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    password: sa
+    username:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+logging:
+  level:
+    academy.devdojo: debug
+server:
+  servlet:
+    context-path: /
+  error:
+    include-stacktrace: on_param
+  tomcat:
+    threads:
+      max: 20
+
+  threads:
+    virtual:
+      enabled: true
+
