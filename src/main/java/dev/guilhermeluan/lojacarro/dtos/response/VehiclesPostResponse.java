@@ -1,7 +1,6 @@
 package dev.guilhermeluan.lojacarro.dtos.response;
 
-import dev.guilhermeluan.lojacarro.model.VehicleType;
-import jakarta.validation.constraints.NotBlank;
+import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 
 public record VehiclesPostResponse(
         Long id,

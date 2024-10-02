@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "type": "AUTOMOVEL",
+  "model": "Jetta",
+  "color": "White",
+  "price": 25000,
+  "year": 2023
+}

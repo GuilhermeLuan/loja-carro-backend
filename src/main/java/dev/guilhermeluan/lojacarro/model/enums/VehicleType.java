@@ -1,4 +1,4 @@
-package dev.guilhermeluan.lojacarro.model;
+package dev.guilhermeluan.lojacarro.model.enums;
 
 public enum VehicleType {
     AUTOMOVEL,

@@ -1,6 +1,6 @@
 package dev.guilhermeluan.lojacarro.commons;
 
-import dev.guilhermeluan.lojacarro.model.VehicleType;
+import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.service.VehiclesService;
 import lombok.RequiredArgsConstructor;

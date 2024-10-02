@@ -1,6 +1,6 @@
 package dev.guilhermeluan.lojacarro.dtos.request;
 
-import dev.guilhermeluan.lojacarro.model.VehicleType;
+import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
