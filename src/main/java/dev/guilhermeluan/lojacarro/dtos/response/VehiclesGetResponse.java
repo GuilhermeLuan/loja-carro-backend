@@ -10,6 +10,7 @@ public record VehiclesGetResponse(
         String color,
         VehicleBrand brand,
         Double price,
-        int year
+        int year,
+        String imageLink
 ) {
 }

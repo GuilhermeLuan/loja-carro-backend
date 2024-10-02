@@ -10,5 +10,8 @@ public record VehiclesPostResponse(
         VehicleBrand brand,
         String color,
         Double price,
-        int year
-) { }
+        int year,
+        String imageLink
+
+) {
+}

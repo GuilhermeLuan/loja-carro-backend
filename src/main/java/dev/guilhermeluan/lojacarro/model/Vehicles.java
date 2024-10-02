@@ -5,6 +5,8 @@ import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.lang.model.element.Name;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,5 +26,7 @@ public class Vehicles {
     private String color;
     private Double price;
     private int year;
+    @Column(name = "image_link")
+    private String imageLink;
 }
 

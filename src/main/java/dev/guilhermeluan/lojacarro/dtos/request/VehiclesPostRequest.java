@@ -17,6 +17,8 @@ public record VehiclesPostRequest(
         @NotNull
         Double price,
         @NotNull
-        int year
+        int year,
+        @NotBlank
+        String imageLink
 ) {
 }
