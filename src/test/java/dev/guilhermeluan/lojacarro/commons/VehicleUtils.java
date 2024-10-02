@@ -1,5 +1,6 @@
 package dev.guilhermeluan.lojacarro.commons;
 
+import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.service.VehiclesService;
@@ -17,6 +18,7 @@ public class VehicleUtils {
                 .type(VehicleType.AUTOMOVEL)
                 .model("Sedan")
                 .color("Red")
+                .brand(VehicleBrand.BMW)
                 .price(25000.0)
                 .year(2021)
                 .build();
@@ -27,6 +29,7 @@ public class VehicleUtils {
                 .model("SUV")
                 .color("Black")
                 .price(35000.0)
+                .brand(VehicleBrand.BMW)
                 .year(2023)
                 .build();
 
@@ -36,6 +39,7 @@ public class VehicleUtils {
                 .model("Truck")
                 .color("Blue")
                 .price(45000.0)
+                .brand(VehicleBrand.BMW)
                 .year(2022)
                 .build();
 
@@ -48,6 +52,7 @@ public class VehicleUtils {
                 .type(VehicleType.AUTOMOVEL)   // Supondo que VehicleType seja um enum com CAR, BIKE, etc.
                 .model("Toyota Corolla")
                 .color("Preto")
+                .brand(VehicleBrand.TOYOTA)
                 .price(85000.00)
                 .year(2020)
                 .build();
