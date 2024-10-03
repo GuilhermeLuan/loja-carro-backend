@@ -7,19 +7,21 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.URL;
 
 public record VehiclesPostRequest(
-        @NotNull
+        @NotNull(message = "The field 'VehicleType' is required")
         VehicleType type,
-        @NotBlank
+        @NotBlank(message = "The field 'Model' is required")
         String model,
-        @NotBlank
+        @NotBlank(message = "The field 'Color' is required")
         String color,
-        @NotNull
+        @NotNull(message = "The field 'Brand' is required")
         VehicleBrand brand,
-        @NotNull
+        @NotNull(message = "The field 'Price' is required")
         Double price,
-        @NotNull
+        @NotNull(message = "The field 'Year' is required")
         int year,
-        @NotBlank @URL(protocol = "http")
+        @NotBlank(message = "The field 'ImageLink' is required")
+        @URL(protocol = "http", message = "The field 'ImageLink' must be a valid URL")
         String imageLink
 ) {
 }
+
