@@ -5,10 +5,12 @@ import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import dev.guilhermeluan.lojacarro.service.VehiclesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @RequiredArgsConstructor
+@Component
 public class VehicleUtils {
     private final VehiclesService service;
 
@@ -49,7 +51,7 @@ public class VehicleUtils {
         return List.of(sedan, suv, truck);
     }
 
-    public Vehicles newVehicleToSave() {
+    public Vehicles newVehicle() {
         return Vehicles.builder()
                 .id(1L)
                 .type(VehicleType.AUTOMOVEL)   // Supondo que VehicleType seja um enum com CAR, BIKE, etc.

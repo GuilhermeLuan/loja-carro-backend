@@ -1,10 +1,9 @@
 {
-  "id": 1,
   "type": "AUTOMOVEL",
-  "model": "Sedan",
-  "color": "Red",
-  "brand": "BMW",
-  "price": 25000.0,
-  "year": 2021,
+  "model": "Toyota Corolla",
+  "color": "Preto",
+  "brand": "TOYOTA",
+  "price": 85000.00,
+  "year": 2020,
   "imageLink": "https://img.freepik.com/free-vector/red-sedan-car-isolated-white-vector_53876-64366.jpg"
 }

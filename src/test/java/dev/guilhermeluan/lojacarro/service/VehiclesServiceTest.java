@@ -1,7 +1,7 @@
 package dev.guilhermeluan.lojacarro.service;
 
 import dev.guilhermeluan.lojacarro.commons.VehicleUtils;
-import dev.guilhermeluan.lojacarro.exception.BadRequestException;
+import dev.guilhermeluan.lojacarro.exception.NotFoundException;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.repositories.VehiclesRepository;
 import org.assertj.core.api.Assertions;
@@ -93,7 +93,7 @@ class VehiclesServiceTest {
     @Test
     @DisplayName("save saves vehicle when successful")
     void save_ReturnsVehicle_WhenVehicleSaved() {
-        var vehicleToSave = vehicleUtils.newVehicleToSave();
+        var vehicleToSave = vehicleUtils.newVehicle();
 
         BDDMockito.when(repository.save(vehicleToSave)).thenReturn(vehicleToSave);
 
@@ -120,11 +120,11 @@ class VehiclesServiceTest {
     void findById_ReturnBadRequestException_WhenIdIsNotFound() {
         var vehicleExpected = vehiclesList.get(0);
 
-        BDDMockito.when(repository.findById(vehicleExpected.getId())).thenThrow(BadRequestException.class);
+        BDDMockito.when(repository.findById(vehicleExpected.getId())).thenThrow(NotFoundException.class);
 
         Assertions.assertThatException()
                 .isThrownBy(() -> service.findByIdOrThrowBadRequestException(vehicleExpected.getId()))
-                .isInstanceOf(BadRequestException.class);
+                .isInstanceOf(NotFoundException.class);
     }
 
     @Test
@@ -142,11 +142,11 @@ class VehiclesServiceTest {
     void delete_ThrowsBadRequestException_WhenVehiclesIsNotFound() {
         var vehiclesToDelete = vehiclesList.get(0);
 
-        BDDMockito.when(repository.findById(vehiclesToDelete.getId())).thenThrow(BadRequestException.class);
+        BDDMockito.when(repository.findById(vehiclesToDelete.getId())).thenThrow(NotFoundException.class);
 
         Assertions.assertThatException()
                 .isThrownBy(() -> service.deleteById(vehiclesToDelete.getId()))
-                .isInstanceOf(BadRequestException.class);
+                .isInstanceOf(NotFoundException.class);
     }
 
     @Test
@@ -168,10 +168,10 @@ class VehiclesServiceTest {
         vehiclesToUpdate.setModel("New Model");
 
 
-        BDDMockito.when(repository.findById(vehiclesToUpdate.getId())).thenThrow(BadRequestException.class);
+        BDDMockito.when(repository.findById(vehiclesToUpdate.getId())).thenThrow(NotFoundException.class);
 
         Assertions.assertThatException()
                 .isThrownBy(() -> service.update(vehiclesToUpdate))
-                .isInstanceOf(BadRequestException.class);
+                .isInstanceOf(NotFoundException.class);
     }
 }
