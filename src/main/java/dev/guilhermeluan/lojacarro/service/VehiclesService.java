@@ -1,6 +1,6 @@
 package dev.guilhermeluan.lojacarro.service;
 
-import dev.guilhermeluan.lojacarro.exception.BadRequestException;
+import dev.guilhermeluan.lojacarro.exception.NotFoundException;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.repositories.VehiclesRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,12 @@ public class VehiclesService {
 
     public Vehicles findByIdOrThrowBadRequestException(Long id) {
         return repository.findById(id).
-                orElseThrow(() -> new BadRequestException("Vehicle not found"));
+                orElseThrow(() -> new NotFoundException("Vehicle not found"));
     }
 
     public void deleteById(Long id) {
-        var vehicles = repository.findById(id);
-        repository.deleteById(vehicles.get().getId());
+        assertVehicleExist(id);
+        repository.deleteById(id);
     }
 
     public void update(Vehicles vehicle) {
