@@ -1,5 +1,7 @@
 package dev.guilhermeluan.lojacarro.dtos.request;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.guilhermeluan.lojacarro.exception.VehiclesEnumDeserializer;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import jakarta.validation.constraints.NotBlank;
@@ -8,12 +10,14 @@ import org.hibernate.validator.constraints.URL;
 
 public record VehiclesPostRequest(
         @NotNull(message = "The field 'VehicleType' is required")
+        @JsonDeserialize(using = VehiclesEnumDeserializer.class)
         VehicleType type,
         @NotBlank(message = "The field 'Model' is required")
         String model,
         @NotBlank(message = "The field 'Color' is required")
         String color,
         @NotNull(message = "The field 'Brand' is required")
+        @JsonDeserialize(using = VehiclesEnumDeserializer.class)
         VehicleBrand brand,
         @NotNull(message = "The field 'Price' is required")
         Double price,
