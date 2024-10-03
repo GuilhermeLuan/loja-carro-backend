@@ -4,6 +4,7 @@ import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.URL;
 
 public record VehiclesPostRequest(
         @NotNull
@@ -18,7 +19,7 @@ public record VehiclesPostRequest(
         Double price,
         @NotNull
         int year,
-        @NotBlank
+        @NotBlank @URL(protocol = "http")
         String imageLink
 ) {
 }
