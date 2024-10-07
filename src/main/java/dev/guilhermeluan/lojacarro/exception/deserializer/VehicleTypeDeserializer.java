@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 
 import java.io.IOException;

@@ -23,7 +23,7 @@ public record VehiclesPostRequest(
         @NotNull(message = "The field 'Price' is required")
         Double price,
         @NotNull(message = "The field 'Year' is required")
-        int year,
+        Integer year,
         @NotBlank(message = "The field 'ImageLink' is required")
         @URL(protocol = "https", message = "The field 'ImageLink' must be a valid URL")
         String imageLink

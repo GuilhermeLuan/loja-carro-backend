@@ -1,0 +1,9 @@
+{
+  "type": "AUTOMOVEL",
+  "model": "Toyota Corolla",
+  "color": "Preto",
+  "brand": "TOYOTA",
+  "price": 85000.00,
+  "year": 2020,
+  "imageLink": "http://img.freepik.com/free-vector/red-sedan-car-isolated-white-vector_53876-64366.jpg"
+}

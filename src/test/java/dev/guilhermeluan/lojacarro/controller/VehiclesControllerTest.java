@@ -4,9 +4,13 @@ import dev.guilhermeluan.lojacarro.commons.FileUtils;
 import dev.guilhermeluan.lojacarro.commons.VehicleUtils;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.repositories.VehiclesRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +19,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = VehiclesController.class)
 @ComponentScan(basePackages = "dev.guilhermeluan.lojacarro")
@@ -52,7 +58,7 @@ class VehiclesControllerTest {
         BDDMockito.when(repository.findById(id)).thenReturn(vehicleFound);
 
         mockMvc.perform(get(URL + "/{id}", id)
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(response));
@@ -149,11 +155,73 @@ class VehiclesControllerTest {
                 .andExpect(content().json(response));
     }
 
+    @ParameterizedTest
+    @MethodSource("postVehiclesBadRequest")
+    @DisplayName("POST /v1/vehicles returns bad request when fields are invalid")
+    void save_ReturnsBadRequest_WhenFieldsAreInvalid(String fileName, List<String> errors) throws Exception {
+        var request = fileUtils.readResourceFile("vehicles/post/%s".formatted(fileName));
 
-    private static List<String> invalidImageLink(){
-        var imageLinkUrlError = "The field 'ImageLink' must be a valid URL";
-        return List.of(imageLinkUrlError);
+        MvcResult mvcResult = mockMvc.perform(post(URL)
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        var resolvedException = mvcResult.getResolvedException();
+
+        Assertions.assertThat(resolvedException).isNotNull();
+        Assertions.assertThat(resolvedException.getMessage()).contains(errors);
     }
+
+    @ParameterizedTest
+    @MethodSource("putVehiclesBadRequest")
+    @DisplayName("PUT v1/users returns bad request when fields are invalid")
+    void update_ReturnsBadRequest_WhenFieldsAreInvalid(String fileName, List<String> errors) throws Exception {
+        var request = fileUtils.readResourceFile("vehicles/put/%s".formatted(fileName));
+
+        MvcResult mvcResult = mockMvc.perform(put(URL)
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        var resolvedException = mvcResult.getResolvedException();
+
+        Assertions.assertThat(resolvedException).isNotNull();
+        Assertions.assertThat(resolvedException.getMessage()).contains(errors);
+    }
+
+    private static Stream<Arguments> putVehiclesBadRequest() {
+        List<String> allRequiredErros = allRequiredErrors();
+        allRequiredErros.add("The field 'id' is required");
+        List<String> invalidUrlLink = invalidUrlLink();
+
+        return Stream.of(
+                Arguments.of("put-vehicle-blank-fields-request.json", allRequiredErros),
+                Arguments.of("put-vehicle-empty-fields-request.json", allRequiredErros),
+                Arguments.of("put-vehicle-invalid-url-request.json", invalidUrlLink)
+        );
+    }
+
+
+    private static Stream<Arguments> postVehiclesBadRequest() {
+        List<String> allRequiredErrors = allRequiredErrors();
+        List<String> invalidUrlLink = invalidUrlLink();
+
+        return Stream.of(
+                Arguments.of("post-vehicle-blank-fields-request.json", allRequiredErrors),
+                Arguments.of("post-vehicle-empty-fields-request.json", allRequiredErrors),
+                Arguments.of("post-vehicle-invalid-url-request.json", invalidUrlLink));
+    }
+
+    private static List<String> invalidUrlLink() {
+        var invalidUrlLink = "The field 'ImageLink' must be a valid URL";
+
+        return List.of(invalidUrlLink);
+    }
+
 
     private static List<String> allRequiredErrors() {
         var vehicleTypeRequiredError = "The field 'VehicleType' is required";
