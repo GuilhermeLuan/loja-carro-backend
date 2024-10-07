@@ -16,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,5 +147,32 @@ class VehiclesControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(response));
+    }
+
+
+    private static List<String> invalidImageLink(){
+        var imageLinkUrlError = "The field 'ImageLink' must be a valid URL";
+        return List.of(imageLinkUrlError);
+    }
+
+    private static List<String> allRequiredErrors() {
+        var vehicleTypeRequiredError = "The field 'VehicleType' is required";
+        var modelRequiredError = "The field 'Model' is required";
+        var colorRequiredError = "The field 'Color' is required";
+        var brandRequiredError = "The field 'Brand' is required";
+        var priceRequiredError = "The field 'Price' is required";
+        var yearRequiredError = "The field 'Year' is required";
+        var imageLinkRequiredError = "The field 'ImageLink' is required";
+
+
+        return new ArrayList<>(List.of(
+                vehicleTypeRequiredError,
+                modelRequiredError,
+                colorRequiredError,
+                brandRequiredError,
+                priceRequiredError,
+                yearRequiredError,
+                imageLinkRequiredError
+        ));
     }
 }

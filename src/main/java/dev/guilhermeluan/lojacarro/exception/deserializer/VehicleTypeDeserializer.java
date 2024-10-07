@@ -1,20 +1,21 @@
-package dev.guilhermeluan.lojacarro.exception;
+package dev.guilhermeluan.lojacarro.exception.deserializer;
 
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
+import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 
 import java.io.IOException;
 
-public class VehiclesEnumDeserializer extends JsonDeserializer<VehicleBrand> {
+public class VehicleTypeDeserializer extends JsonDeserializer<VehicleType> {
     @Override
-    public VehicleBrand deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public VehicleType deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
         String value = jsonParser.getText();
         if (value == null || value.trim().isEmpty()) {
             return null;
         }
-        return VehicleBrand.valueOf(value);
+        return VehicleType.valueOf(value);
     }
 }
