@@ -3,9 +3,10 @@ package dev.guilhermeluan.lojacarro.model;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
 import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
 import jakarta.persistence.*;
-import lombok.*;
-
-import javax.lang.model.element.Name;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor

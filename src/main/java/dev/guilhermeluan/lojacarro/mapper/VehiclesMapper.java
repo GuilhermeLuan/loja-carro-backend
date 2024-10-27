@@ -13,8 +13,10 @@ public interface VehiclesMapper {
     VehiclesMapper INSTANCE = Mappers.getMapper(VehiclesMapper.class);
 
     Vehicles toVehicles(VehiclesPostRequest vehiclesPostRequestBody);
+
     Vehicles toVehicles(VehiclesPutRequest vehiclesPutRequestBody);
 
     VehiclesPostResponse toVehiclesPostResponse(Vehicles vehicles);
+
     VehiclesGetResponse toVehiclesGetResponse(Vehicles vehicles);
 }

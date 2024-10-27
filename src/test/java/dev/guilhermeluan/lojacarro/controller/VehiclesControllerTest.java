@@ -114,7 +114,7 @@ class VehiclesControllerTest {
     @DisplayName("DELETE /v1/vehicles/{id} throws Not Found exception when vehicle is not found")
     void delete_ThrowsNotFoundException_WhenVehicleIsNotFound() throws Exception {
         var response = fileUtils.readResourceFile("vehicles/delete/delete-vehicle-by-id-404.json");
-        Long id = 99l;
+        Long id = 99L;
 
         mockMvc.perform(delete(URL + "/{id}", id)
                         .accept(MediaType.APPLICATION_JSON))
