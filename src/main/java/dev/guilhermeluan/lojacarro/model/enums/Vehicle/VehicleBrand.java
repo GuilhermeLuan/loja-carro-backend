@@ -1,4 +1,4 @@
-package dev.guilhermeluan.lojacarro.model.enums;
+package dev.guilhermeluan.lojacarro.model.enums.Vehicle;
 
 public enum VehicleBrand {
     CHEVROLET,

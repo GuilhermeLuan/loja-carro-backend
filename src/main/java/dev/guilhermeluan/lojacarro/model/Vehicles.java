@@ -1,23 +1,22 @@
 package dev.guilhermeluan.lojacarro.model;
 
-import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
-import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleBrand;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
 @Table(name = "tb_vehicles")
 public class Vehicles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     @Enumerated(EnumType.STRING)
     private VehicleType type;

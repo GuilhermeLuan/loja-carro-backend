@@ -3,7 +3,7 @@ package dev.guilhermeluan.lojacarro.exception.deserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleType;
 
 import java.io.IOException;
 

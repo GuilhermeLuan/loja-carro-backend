@@ -1,8 +1,8 @@
 package dev.guilhermeluan.lojacarro.commons;
 
 import dev.guilhermeluan.lojacarro.model.Vehicles;
-import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
-import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleBrand;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleType;
 import dev.guilhermeluan.lojacarro.service.VehiclesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

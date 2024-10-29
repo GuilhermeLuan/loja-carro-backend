@@ -1,7 +1,7 @@
 package dev.guilhermeluan.lojacarro.dtos.response;
 
-import dev.guilhermeluan.lojacarro.model.enums.VehicleBrand;
-import dev.guilhermeluan.lojacarro.model.enums.VehicleType;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleBrand;
+import dev.guilhermeluan.lojacarro.model.enums.Vehicle.VehicleType;
 
 public record VehiclesPostResponse(
         Long id,
