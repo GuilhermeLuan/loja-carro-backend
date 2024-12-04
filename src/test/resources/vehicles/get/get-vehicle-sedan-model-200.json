@@ -1,0 +1,39 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "type": "AUTOMOVEL",
+      "model": "Sedan",
+      "brand": "BMW",
+      "color": "Red",
+      "price": 25000,
+      "year": 2021,
+      "imageLink": "https://img.freepik.com/free-vector/red-sedan-car-isolated-white-vector_53876-64366.jpg"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 1,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "size": 1,
+  "number": 0,
+  "sort": {
+    "empty": true,
+    "sorted": false,
+    "unsorted": true
+  },
+  "first": true,
+  "numberOfElements": 1,
+  "empty": false
+}
