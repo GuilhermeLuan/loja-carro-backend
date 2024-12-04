@@ -40,7 +40,7 @@ class VehiclesServiceTest {
     }
 
     @Test
-    @DisplayName("findAll returns list of anime inside page object when argument is null")
+    @DisplayName("findAll returns list of vehicle inside page object when argument is null")
     void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenArgumentIsNull() {
         var expectedId = vehiclesList.get(0).getId();
 
@@ -58,7 +58,7 @@ class VehiclesServiceTest {
     }
 
     @Test
-    @DisplayName("findAll returns list of anime inside page object when model existis")
+    @DisplayName("findAll returns list of vehicle inside page object when model existis")
     void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenModelExistis() {
         var vehicles = vehiclesList.get(0);
         var expectedVehicleFounds = Collections.singletonList(vehicles);
@@ -138,7 +138,7 @@ class VehiclesServiceTest {
     }
 
     @Test
-    @DisplayName("delete throws BadRequestException when anime is not found")
+    @DisplayName("delete throws BadRequestException when vehicle is not found")
     void delete_ThrowsBadRequestException_WhenVehiclesIsNotFound() {
         var vehiclesToDelete = vehiclesList.get(0);
 
@@ -150,7 +150,7 @@ class VehiclesServiceTest {
     }
 
     @Test
-    @DisplayName("update updates an anime when is successful ")
+    @DisplayName("update updates an vehicle when is successful ")
     void update_UpdatesVehicle_WhenIsSuccessful() {
         var vehiclesToUpdate = vehiclesList.get(0);
         vehiclesToUpdate.setModel("New Model");
@@ -162,7 +162,7 @@ class VehiclesServiceTest {
     }
 
     @Test
-    @DisplayName("update throws BadRequestException when anime is not found")
+    @DisplayName("update throws BadRequestException when vehicle is not found")
     void update_ThrowsRBadRequestException_WhenVehiclesIsNotFound() {
         var vehiclesToUpdate = vehiclesList.get(0);
         vehiclesToUpdate.setModel("New Model");
