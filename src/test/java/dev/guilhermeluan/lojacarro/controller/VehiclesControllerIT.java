@@ -19,7 +19,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Sql(value = "/vehicles/SQL/create_table_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 class VehiclesControllerIT extends IntegrationTestConfig {
     private static final String URL = "/v1/vehicles";
 
@@ -39,8 +38,8 @@ class VehiclesControllerIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("GET /v1/vehicles/{id} returns vehicle with given id")
-    @Sql(value = "/vehicles/SQL/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = "/vehicles/SQL/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(1)
     void findById_ReturnsVehicle_WithGivenId() {
         var expectedResponse = fileUtils.readResourceFile("vehicles/get/get-vehicle-by-id-200.json");
@@ -60,8 +59,8 @@ class VehiclesControllerIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("GET /v1/vehicles/{id} throws bad request exception when vehicle is not found")
-    @Sql(value = "/vehicles/SQL/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = "/vehicles/SQL/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(2)
     void findById_ThrowsBadRequestException_WhenVehicleIsNotFound() {
         var expectedResponse = fileUtils.readResourceFile("vehicles/get/get-vehicle-by-id-404.json");
@@ -79,7 +78,7 @@ class VehiclesControllerIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("POST /v1/vehicles creates vehicles when successful")
-    @Sql(value = "/vehicles/SQL/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(3)
     void save_CreatesVehicle_WhenSuccessful() {
         var request = fileUtils.readResourceFile("vehicles/post/post-vehicle-200-request.json");
@@ -108,8 +107,8 @@ class VehiclesControllerIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("DELETE /v1/vehicles/{id} removes vehicle with given id")
-    @Sql(value = "/vehicles/SQL/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = "/vehicles/SQL/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(4)
     void delete_RemovesVehicle_WithGivenId() {
         Long id = repository.findAll().get(0).getId();
@@ -126,8 +125,8 @@ class VehiclesControllerIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("DELETE /v1/vehicles/{id} throws Not Found exception when vehicle is not found")
-    @Sql(value = "/vehicles/SQL/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = "/vehicles/SQL/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(5)
     void delete_ThrowsNotFoundException_WhenVehicleIsNotFound() {
         var expectedResponse = fileUtils.readResourceFile("vehicles/delete/delete-vehicle-by-id-404.json");
@@ -146,8 +145,8 @@ class VehiclesControllerIT extends IntegrationTestConfig {
 
     @Test
     @DisplayName("PUT /v1/vehicles updates vehicles when successful")
-    @Sql(value = "/vehicles/SQL/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = "/vehicles/SQL/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @Order(6)
     void update_UpdatesVehicle_WhenSuccessful() {
         var request = fileUtils.readResourceFile("vehicles/put/put-vehicle-200-request.json");
