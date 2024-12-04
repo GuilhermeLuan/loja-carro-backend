@@ -17,11 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -47,6 +51,73 @@ class VehiclesControllerTest {
     @BeforeEach
     void setUp() {
         vehiclesList = vehicleUtils.newVehicleList();
+    }
+
+    @Test
+    @DisplayName("GET /v1/vehicles returns list of vehicle inside page object when argument is null")
+    void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenArgumentIsNull() throws Exception {
+        var response = fileUtils.readResourceFile("vehicles/get/get-vehicle-200.json");
+        PageRequest pageRequest = PageRequest.of(0, vehiclesList.size());
+        PageImpl<Vehicles> vehiclesPage = new PageImpl<>(vehiclesList, pageRequest, pageRequest.getPageNumber());
+
+        BDDMockito.when(repository.findAll(ArgumentMatchers.any(Pageable.class)))
+                .thenReturn(vehiclesPage);
+
+        mockMvc.perform(get(URL)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(response));
+    }
+
+    @Test
+    @DisplayName("GET /v1/vehicles?model=Sedan returns list of vehicle inside page object when model existi")
+    void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenModelExistis() throws Exception {
+        var response = fileUtils.readResourceFile("vehicles/get/get-vehicle-sedan-model-200.json");
+
+        String model = "Sedan";
+        List<Vehicles> vehicles = vehiclesList.stream().filter(anime -> anime.getModel().equals(model)).findFirst().stream().toList();
+
+        PageRequest pageRequest = PageRequest.of(0, 1);
+        PageImpl<Vehicles> vehiclesPage = new PageImpl<>(vehicles, pageRequest, pageRequest.getPageNumber());
+
+        BDDMockito.when(repository.findByModelIgnoreCase(ArgumentMatchers.anyString(), ArgumentMatchers.any(Pageable.class)))
+                .thenReturn(vehiclesPage);
+
+
+
+        mockMvc.perform(get(URL)
+                        .param("model", model)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(response));
+    }
+
+    @Test
+    @DisplayName("/v1/vehicles?model=x returns an empty list when model is not found")
+    void findAll_ReturnsEmptyList_WhenVehicleIsNotFound() throws Exception {
+
+        var response = fileUtils.readResourceFile("vehicles/get/get-vehicle-x-model-200.json");
+
+        String model = "X";
+
+        PageRequest pageRequest = PageRequest.of(0, 1);
+        PageImpl<Vehicles> vehiclesPage = new PageImpl<>(Collections.emptyList(), pageRequest, pageRequest.getPageNumber());
+
+        BDDMockito.when(repository.findByModelIgnoreCase(ArgumentMatchers.anyString(), ArgumentMatchers.any(Pageable.class)))
+                .thenReturn(vehiclesPage);
+
+        mockMvc.perform(get(URL)
+                        .param("model", model)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(response));
+
     }
 
     @Test
