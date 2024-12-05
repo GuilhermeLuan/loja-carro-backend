@@ -2,6 +2,7 @@ package dev.guilhermeluan.lojacarro.controller;
 
 import dev.guilhermeluan.lojacarro.commons.FileUtils;
 import dev.guilhermeluan.lojacarro.config.IntegrationTestConfig;
+import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.repositories.VehiclesRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -34,6 +37,92 @@ class VehiclesControllerIT extends IntegrationTestConfig {
     void setUrl() {
         RestAssured.baseURI = "http://localhost:" + port;
         RestAssured.port = port;
+    }
+
+    @Test
+    @DisplayName("GET /v1/vehicles returns list of vehicle inside page object when argument is null")
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenArgumentIsNull() {
+        var expectedResponse = fileUtils.readResourceFile("vehicles/get/get-vehicle-200.json");
+
+        String response = RestAssured.given()
+                .contentType(ContentType.JSON).accept(ContentType.JSON)
+                .when()
+                .get(URL)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .log().all()
+                .extract().response().asString();
+
+
+        JsonAssertions.assertThatJson(response)
+                .and(page -> {
+                    page.node("content").and(content -> {
+                        content.node("[0].id").asNumber().isPositive();
+                    });
+                });
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("id")
+                .when(Option.IGNORING_ARRAY_ORDER)
+                .isEqualTo(expectedResponse);
+    }
+
+    @Test
+    @DisplayName("GET /v1/vehicles?model=Sedan returns list of vehicle inside page object when model existis")
+    @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenModelExistis(){
+        var expectedResponse = fileUtils.readResourceFile("vehicles/get/get-vehicle-sedan-model-200.json");
+        String model = "Sedan";
+
+        String response = RestAssured.given()
+                .contentType(ContentType.JSON).accept(ContentType.JSON)
+                .param("model", model)
+                .when()
+                .get(URL)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .log().all()
+                .extract().response().asString();
+
+        JsonAssertions.assertThatJson(response)
+                .and(page -> {
+                    page.node("content").and(content -> {
+                        content.node("[0].id").asNumber().isPositive();
+                    });
+                });
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("id")
+                .when(Option.IGNORING_ARRAY_ORDER)
+                .isEqualTo(expectedResponse);
+
+    }
+
+    @Test
+    @DisplayName("GET /v1/vehicles?model=x returns an empty list when model is not found")
+    void findAll_ReturnsEmptyList_WhenVehicleIsNotFound() {
+        var expectedResponse = fileUtils.readResourceFile("vehicles/get/get-vehicle-x-model-200.json");
+
+        String model = "x";
+
+        String response = RestAssured.given()
+                .contentType(ContentType.JSON).accept(ContentType.JSON)
+                .param("model", model)
+                .when()
+                .get(URL)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .log().all()
+                .extract().response().asString();
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("id")
+                .when(Option.IGNORING_ARRAY_ORDER)
+                .isEqualTo(expectedResponse);
+
     }
 
     @Test

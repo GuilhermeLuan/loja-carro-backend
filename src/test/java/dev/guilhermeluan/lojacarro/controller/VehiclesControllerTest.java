@@ -57,7 +57,7 @@ class VehiclesControllerTest {
     @DisplayName("GET /v1/vehicles returns list of vehicle inside page object when argument is null")
     void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenArgumentIsNull() throws Exception {
         var response = fileUtils.readResourceFile("vehicles/get/get-vehicle-200.json");
-        PageRequest pageRequest = PageRequest.of(0, vehiclesList.size());
+        PageRequest pageRequest = PageRequest.of(0, 20);
         PageImpl<Vehicles> vehiclesPage = new PageImpl<>(vehiclesList, pageRequest, pageRequest.getPageNumber());
 
         BDDMockito.when(repository.findAll(ArgumentMatchers.any(Pageable.class)))
@@ -79,7 +79,7 @@ class VehiclesControllerTest {
         String model = "Sedan";
         List<Vehicles> vehicles = vehiclesList.stream().filter(anime -> anime.getModel().equals(model)).findFirst().stream().toList();
 
-        PageRequest pageRequest = PageRequest.of(0, 1);
+        PageRequest pageRequest = PageRequest.of(0, 20);
         PageImpl<Vehicles> vehiclesPage = new PageImpl<>(vehicles, pageRequest, pageRequest.getPageNumber());
 
         BDDMockito.when(repository.findByModelIgnoreCase(ArgumentMatchers.anyString(), ArgumentMatchers.any(Pageable.class)))
@@ -97,14 +97,14 @@ class VehiclesControllerTest {
     }
 
     @Test
-    @DisplayName("/v1/vehicles?model=x returns an empty list when model is not found")
+    @DisplayName("GET /v1/vehicles?model=x returns an empty list when model is not found")
     void findAll_ReturnsEmptyList_WhenVehicleIsNotFound() throws Exception {
 
         var response = fileUtils.readResourceFile("vehicles/get/get-vehicle-x-model-200.json");
 
         String model = "X";
 
-        PageRequest pageRequest = PageRequest.of(0, 1);
+        PageRequest pageRequest = PageRequest.of(0, 20);
         PageImpl<Vehicles> vehiclesPage = new PageImpl<>(Collections.emptyList(), pageRequest, pageRequest.getPageNumber());
 
         BDDMockito.when(repository.findByModelIgnoreCase(ArgumentMatchers.anyString(), ArgumentMatchers.any(Pageable.class)))
