@@ -4,11 +4,13 @@ import dev.guilhermeluan.lojacarro.dtos.request.VehiclesPostRequest;
 import dev.guilhermeluan.lojacarro.dtos.request.VehiclesPutRequest;
 import dev.guilhermeluan.lojacarro.dtos.response.VehiclesGetResponse;
 import dev.guilhermeluan.lojacarro.dtos.response.VehiclesPostResponse;
+import dev.guilhermeluan.lojacarro.exception.DefaultErrorMessage;
 import dev.guilhermeluan.lojacarro.model.Vehicles;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,8 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Vehicles API", description = "Vehicles API endpoints")
 
+@Tag(name = "Vehicles API", description = "Vehicles API endpoints")
 public interface VehiclesControllerI {
     @GetMapping
     @Operation(summary = "Get all vehicles", description = "Get all vehicles available in the system",
@@ -32,11 +34,27 @@ public interface VehiclesControllerI {
 
                     )
             })
-
     ResponseEntity<Page<Vehicles>> listAll(@Parameter(description = "models of vehicles to be searched") @RequestParam(required = false) String model, @ParameterObject Pageable pageable);
 
     @GetMapping("/{id}")
-    ResponseEntity<VehiclesGetResponse> listById(@PathVariable Long id);
+    @Operation(summary = "Get a vehicle by its id", responses = {
+            @ApiResponse(description = "Get vehicle by its id",
+                    responseCode = "200",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = VehiclesGetResponse.class))
+
+            ),
+            @ApiResponse(description = "Vehicle Not Found",
+                    responseCode = "404",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DefaultErrorMessage.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                      "message": "Vehicle not found",
+                                      "status": 404
+                                    }
+                                    """))
+            )
+    })
+    ResponseEntity<VehiclesGetResponse> listById(@Parameter(description = "id of user to be searched") @PathVariable Long id);
 
     @PostMapping
     ResponseEntity<VehiclesPostResponse> save(@RequestBody @Valid VehiclesPostRequest request);

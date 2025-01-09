@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 
+
 @RestController
 @RequestMapping("/v1/vehicles")
 public class VehiclesControllerImpl implements VehiclesControllerI {
