@@ -12,7 +12,7 @@ spring:
 
 logging:
   level:
-    academy.devdojo: debug
+    dev.guilhermeluan.lojacarro: debug
 server:
   servlet:
     context-path: /
@@ -22,7 +22,7 @@ server:
     threads:
       max: 20
 
-  threads:
-    virtual:
-      enabled: true
+threads:
+  virtual:
+    enabled: true
 

@@ -19,17 +19,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/vehicles")
-public class VehiclesController {
+public class VehiclesControllerImpl implements VehiclesControllerI {
     private static final VehiclesMapper MAPPPER = VehiclesMapper.INSTANCE;
     private final VehiclesService service;
 
     @GetMapping
+    @Override
     public ResponseEntity<Page<Vehicles>> listAll(@RequestParam(required = false) String model, Pageable pageable) {
         var vehicles = service.findALl(pageable, model);
         return ResponseEntity.ok(vehicles);
     }
 
     @GetMapping("/{id}")
+    @Override
     public ResponseEntity<VehiclesGetResponse> listById(@PathVariable Long id) {
         var vehicles = service.findByIdOrThrowBadRequestException(id);
 
@@ -39,6 +41,7 @@ public class VehiclesController {
     }
 
     @PostMapping
+    @Override
     public ResponseEntity<VehiclesPostResponse> save(@RequestBody @Valid VehiclesPostRequest request) {
         var vehicles = MAPPPER.toVehicles(request);
         var savedVehicle = service.save(vehicles);
@@ -49,6 +52,7 @@ public class VehiclesController {
     }
 
     @DeleteMapping("/{id}")
+    @Override
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteById(id);
 
@@ -56,6 +60,7 @@ public class VehiclesController {
     }
 
     @PutMapping
+    @Override
     public ResponseEntity<Void> update(@RequestBody @Valid VehiclesPutRequest request) {
         var vehicleToUpdate = MAPPPER.toVehicles(request);
 

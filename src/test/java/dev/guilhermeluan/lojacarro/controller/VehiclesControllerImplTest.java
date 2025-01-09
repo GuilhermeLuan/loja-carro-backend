@@ -34,9 +34,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = VehiclesController.class)
+@WebMvcTest(controllers = VehiclesControllerImpl.class)
 @ComponentScan(basePackages = "dev.guilhermeluan.lojacarro")
-class VehiclesControllerTest {
+class VehiclesControllerImplTest {
     private static final String URL = "/v1/vehicles";
     @Autowired
     private MockMvc mockMvc;

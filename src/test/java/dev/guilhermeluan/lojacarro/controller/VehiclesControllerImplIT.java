@@ -19,7 +19,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class VehiclesControllerIT extends IntegrationTestConfig {
+class VehiclesControllerImplIT extends IntegrationTestConfig {
     private static final String URL = "/v1/vehicles";
 
     @LocalServerPort
