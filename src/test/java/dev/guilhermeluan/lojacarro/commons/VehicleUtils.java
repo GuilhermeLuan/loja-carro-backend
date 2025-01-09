@@ -21,7 +21,7 @@ public class VehicleUtils {
                 .model("Sedan")
                 .color("Red")
                 .brand(VehicleBrand.BMW)
-                .price(25000.0)
+                .price(25000.5)
                 .year(2021)
                 .imageLink("https://img.freepik.com/free-vector/red-sedan-car-isolated-white-vector_53876-64366.jpg")
                 .build();
