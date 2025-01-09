@@ -2,7 +2,6 @@ package dev.guilhermeluan.lojacarro.controller;
 
 import dev.guilhermeluan.lojacarro.commons.FileUtils;
 import dev.guilhermeluan.lojacarro.config.IntegrationTestConfig;
-import dev.guilhermeluan.lojacarro.model.Vehicles;
 import dev.guilhermeluan.lojacarro.repositories.VehiclesRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -14,8 +13,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -73,7 +70,7 @@ class VehiclesControllerIT extends IntegrationTestConfig {
     @DisplayName("GET /v1/vehicles?model=Sedan returns list of vehicle inside page object when model existis")
     @Sql(value = "/vehicles/sql/init_one_vehicle.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(value = "/vehicles/sql/clean_vehicle.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenModelExistis(){
+    void findAll_ReturnsListOfVehiclesInsidePagesObject_WhenModelExistis() {
         var expectedResponse = fileUtils.readResourceFile("vehicles/get/get-vehicle-sedan-model-200.json");
         String model = "Sedan";
 

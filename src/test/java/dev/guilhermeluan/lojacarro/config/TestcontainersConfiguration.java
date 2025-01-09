@@ -11,7 +11,7 @@ public class TestcontainersConfiguration {
     @Bean
 
     @ServiceConnection
-    PostgreSQLContainer<?> mysqlContainer() {
+    PostgreSQLContainer<?> postgreSQLContainer() {
         return new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.4"));
     }
 }
