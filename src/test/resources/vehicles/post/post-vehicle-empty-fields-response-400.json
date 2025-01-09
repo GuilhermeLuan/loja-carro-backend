@@ -1,0 +1,1 @@
+{"error":"Bad Request","message":"The field 'Brand' is required, The field 'Color' is required, The field 'ImageLink' is required, The field 'Model' is required, The field 'Price' is required, The field 'VehicleType' is required, The field 'Year' is required","path":"/v1/vehicles","status":400,"timestamp":"2025-01-09T14:11:35.1224225-03:00"}
