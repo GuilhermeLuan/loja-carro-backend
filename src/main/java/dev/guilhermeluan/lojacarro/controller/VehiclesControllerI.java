@@ -54,13 +54,65 @@ public interface VehiclesControllerI {
                                     """))
             )
     })
-    ResponseEntity<VehiclesGetResponse> listById(@Parameter(description = "id of user to be searched") @PathVariable Long id);
+    ResponseEntity<VehiclesGetResponse> listById(@Parameter(description = "id of vehicle to be searched") @PathVariable Long id);
 
     @PostMapping
-    ResponseEntity<VehiclesPostResponse> save(@RequestBody @Valid VehiclesPostRequest request);
+    @Operation(summary = "Create a new vehicle",
+            responses = {
+                    @ApiResponse(description = "Creates a vehicle",
+                            responseCode = "201",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = VehiclesPostResponse.class))
+
+                    ),
+                    @ApiResponse(description = "Bad Request",
+                            responseCode = "400",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DefaultErrorMessage.class),
+                                    examples = @ExampleObject(value = """
+                                            {
+                                              "message": "The field 'ImageLink' is required",
+                                              "status": 400
+                                            }
+                                            """))
+
+                    )
+            })
+    ResponseEntity<VehiclesPostResponse> save(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Vehicle to be created",
+                    required = true,
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                             schema = @Schema(implementation = VehiclesPostRequest.class),
+                    examples = @ExampleObject(value = """
+                            {
+                              "type": "AUTOMOVEL",
+                              "model": "Civic",
+                              "color": "Blue",
+                              "brand": "HONDA",
+                              "price": 30000.00,
+                              "year": 2022,
+                              "imageLink": "https://www.example.com"
+                            }
+                            """)))
+
+            @RequestBody @Valid VehiclesPostRequest request);
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> delete(@PathVariable Long id);
+    @Operation(summary = "Delete a vehicle by its id", responses = {
+            @ApiResponse(description = "Delete a vehicle by its id",
+                    responseCode = "204"
+            ),
+            @ApiResponse(description = "Vehicle Not Found",
+                    responseCode = "404",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DefaultErrorMessage.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                      "message": "Vehicle not found",
+                                      "status": 404
+                                    }
+                                    """))
+            )
+    })
+    ResponseEntity<Void> delete(@Parameter(description = "id of vehicle to be delete") @PathVariable Long id);
 
     @PutMapping
     ResponseEntity<Void> update(@RequestBody @Valid VehiclesPutRequest request);
