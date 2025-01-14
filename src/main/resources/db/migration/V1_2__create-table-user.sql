@@ -1,0 +1,7 @@
+CREATE TABLE TB_USER
+(
+    id    SERIAL PRIMARY KEY,
+    username VARCHAR(100)   NOT NULL,
+    password VARCHAR(255)   NOT NULL,
+    roles VARCHAR(100) NOT NULL DEFAULT 'USER'
+);

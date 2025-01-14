@@ -19,7 +19,11 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST).permitAll()
                         .requestMatchers(HttpMethod.GET, "/v1/vehicles/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/vehicles").permitAll())
+                        .requestMatchers(HttpMethod.GET, "/v1/vehicles").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/vehicles").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/v1/vehicles").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/v1/vehicles/{id}").hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
